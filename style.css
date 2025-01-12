@@ -1,55 +1,14 @@
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    display: flex;
-    height: 100vh;
     overflow: hidden;
+    font-family: Arial, sans-serif;
 }
 
-#container {
-    flex: 3;
-    background: #000;
+#webgl-output {
+    width: 100%;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #000;
 }
-
-#controls {
-    flex: 1;
-    padding: 20px;
-    background: #f4f4f4;
-    overflow-y: auto;
-    border-left: 1px solid #ddd;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-h2 {
-    margin-top: 0;
-    color: #333;
-}
-
-label, button {
-    margin-bottom: 10px;
-    font-size: 14px;
-    color: #555;
-}
-
-input[type="range"] {
-    width: 100%;
-}
-
-button {
-    padding: 10px;
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #0056b3;
-}
-
