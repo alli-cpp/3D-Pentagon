@@ -3,68 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unit 2 Assignment - 5 Vertices Polygon</title>
-    <style>
-        body { margin: 0; overflow: hidden; }
-        canvas { display: block; }
-    </style>
+    <title>Interactive 3D Pentagon</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/108/three.min.js"></script>
-<script>
-    // Scene setup
-    var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    var renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
-
-    // Define the vertices of the polygon (pentagon)
-    var vertices = [
-        new THREE.Vector3(0, 1, 0),  // Top vertex
-        new THREE.Vector3(Math.sin(Math.PI / 5), Math.cos(Math.PI / 5), 0),  // Bottom-left
-        new THREE.Vector3(Math.sin(2 * Math.PI / 5), Math.cos(2 * Math.PI / 5), 0),  // Right below top-left
-        new THREE.Vector3(Math.sin(3 * Math.PI / 5), Math.cos(3 * Math.PI / 5), 0),  // Bottom-right
-        new THREE.Vector3(Math.sin(4 * Math.PI / 5), Math.cos(4 * Math.PI / 5), 0)   // Bottom
-    ];
-
-    // Create the geometry using the defined vertices
-    var geometry = new THREE.BufferGeometry().setFromPoints(vertices);
-    geometry.setIndex([0, 1, 2, 0, 2, 3, 0, 3, 4]); // Connect vertices to form a polygon
-    geometry.computeVertexNormals(); // Compute normals for shading
-
-    // Define a red or blue material for the polygon
-    var material = new THREE.MeshBasicMaterial({ color: 0xff0000 }); // Red color
-
-    // Create the polygon mesh and add it to the scene
-    var polygon = new THREE.Mesh(geometry, material);
-    scene.add(polygon);
-
-    // Camera positioning
-    camera.position.z = 5;
-
-    // Animation loop
-    function animate() {
-        requestAnimationFrame(animate);
-
-        // Slowly rotate the polygon about the X and Y axes
-        polygon.rotation.x += 0.01;  // Rotation about X-axis
-        polygon.rotation.y += 0.01;  // Rotation about Y-axis
-
-        renderer.render(scene, camera);
-    }
-
-    animate();
-
-    // Handle resizing the window
-    window.addEventListener('resize', function() {
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-    });
-</script>
-
+    <div id="container"></div>
+    <div id="controls">
+        <h2>Scene Controls</h2>
+        <label>
+            <input type="checkbox" id="rotationToggle"> Enable Rotation
+        </label>
+        <label>
+            Rotation Speed: <input type="range" id="speedControl" min="0" max="0.1" step="0.01" value="0.02">
+        </label>
+        <label>
+            Rotation Axis:
+            <select id="axisSelect">
+                <option value="x">X-Axis</option>
+                <option value="y" selected>Y-Axis</option>
+                <option value="z">Z-Axis</option>
+            </select>
+        </label>
+        <label>
+            <input type="checkbox" id="wireframeToggle"> Show Wireframe
+        </label>
+        <label>
+            <input type="checkbox" id="labelToggle"> Show Labels
+        </label>
+        <button id="resetButton">Reset</button>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
-
