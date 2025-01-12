@@ -1,13 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Pentagon</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8" />
+  <title>CS4406 Computer Graphics - Programming Assignment #2</title>
+  <style id="jsbin-css">
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+  </style>
 </head>
 <body>
-    <div id="webgl-output"></div>
-    <script type="module" src="script.js"></script>
+  <div id="container"></div>
+  <!-- Include necessary libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.5/dat.gui.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/94/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/6.2.1/math.min.js"></script>
+  <script>
+    // Define canvas dimensions
+    var WIDTH = 500, HEIGHT = 500;
+
+    // Define camera properties
+    var VIEW_ANGLE = 45, ASPECT = WIDTH / HEIGHT, NEAR = 1, FAR = 1000;
+
+    // Get container element
+    var $container = $('#container');
+
+    // Create WebGL renderer, scene, and camera
+    var renderer = new THREE.WebGLRenderer();
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
+
+    // Position the camera
+    camera.position.z = 40; // Adjusted for better visibility
+
+    // Add camera to the scene
+    scene.add(camera);
+
+    // Set renderer size and attach to DOM
+    renderer.setSize(WIDTH, HEIGHT);
+    $container.append(renderer.domElement);
+
+    // Custom code for the assignment starts here
+
+    // Define vertices of the pentagon
+    var geometry = new THREE.Geometry();
+    geometry.vertices.push(
+      new THREE.Vector3(-2, -2, 0), // Vertex 0
+      new THREE.Vector3(2, -2, 0),  // Vertex 1
+      new THREE.Vector3(2, 2, 0),   // Vertex 2
+      new THREE.Vector3(0, 3, 0),   // Vertex 3
+      new THREE.Vector3(-2, 2, 0)   // Vertex 4
+    );
+
+    // Define faces (triangles) based on vertices
+    geometry.faces.push(new THREE.Face3(0, 1, 2)); // Triangle 0
+    geometry.faces.push(new THREE.Face3(0, 2, 3)); // Triangle 1
+    geometry.faces.push(new THREE.Face3(0, 3, 4)); // Triangle 2
+
+    // Create material for the polygon (default: red color with double-sided rendering)
+    var material = new THREE.MeshBasicMaterial({
+      color: 0xff0000,
+      side: THREE.DoubleSide
+    });
+
+    // Create mesh using geometry and material
+    var polygon = new THREE.Mesh(geometry, material);
+
+    // Add polygon to the scene
+    scene.add(polygon);
+
+    // Create GUI for color toggle
+    var gui = new dat.GUI();
+    var params = { color: "red" };
+    gui.add(params, "color", ["red", "blue"]).onChange(function (value) {
+      polygon.material.color.set(value === "red" ? 0xff0000 : 0x0000ff);
+    });
+
+    // Debugging: Log vertices and faces
+    console.log("Vertices: ", geometry.vertices);
+    console.log("Faces: ", geometry.faces);
+
+    // Define animation function
+    function animate() {
+      requestAnimationFrame(animate); // Request next animation frame
+      render(); // Render the scene
+      polygon.rotation.x += 0.005; // Rotate polygon on x-axis
+      polygon.rotation.y += 0.005; // Rotate polygon on y-axis
+    }
+
+    // Render function to render the scene
+    function render() {
+      renderer.render(scene, camera); // Render the scene with the camera
+    }
+
+    // Start animation loop
+    animate();
+  </script>
 </body>
 </html>
