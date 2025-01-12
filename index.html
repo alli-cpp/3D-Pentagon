@@ -3,36 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive 3D Pentagon</title>
+    <title>3D Pentagon</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
-    <div id="container"></div>
-    <div id="controls">
-        <h2>Scene Controls</h2>
-        <label>
-            <input type="checkbox" id="rotationToggle"> Enable Rotation
-        </label>
-        <label>
-            Rotation Speed: <input type="range" id="speedControl" min="0" max="0.1" step="0.01" value="0.02">
-        </label>
-        <label>
-            Rotation Axis:
-            <select id="axisSelect">
-                <option value="x">X-Axis</option>
-                <option value="y" selected>Y-Axis</option>
-                <option value="z">Z-Axis</option>
-            </select>
-        </label>
-        <label>
-            <input type="checkbox" id="wireframeToggle"> Show Wireframe
-        </label>
-        <label>
-            <input type="checkbox" id="labelToggle"> Show Labels
-        </label>
-        <button id="resetButton">Reset</button>
-    </div>
-    <script src="script.js"></script>
+    <div id="webgl-output"></div>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
